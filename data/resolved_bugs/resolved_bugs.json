@@ -1,0 +1,1868 @@
+[
+  {
+    "bug_id": "BUG-001",
+    "title": "Null Pointer Exception on Login",
+    "description": "Application crashes when the user clicks the login button.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Authentication",
+    "exception": "NullPointerException",
+    "stack_trace": "java.lang.NullPointerException at LoginService.java:45",
+    "root_cause": "User object was null before accessing its properties.",
+    "resolution": "Added a null check before accessing the object.",
+    "tags": [
+      "login",
+      "null pointer",
+      "authentication"
+    ]
+  },
+  {
+    "bug_id": "BUG-002",
+    "title": "Database Connection Timeout",
+    "description": "The application times out while fetching user details.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Database",
+    "exception": "SQLTimeoutException",
+    "stack_trace": "java.sql.SQLTimeoutException at UserRepository.java:88",
+    "root_cause": "Connection pool was exhausted.",
+    "resolution": "Increased the connection pool size and optimized queries.",
+    "tags": [
+      "database",
+      "timeout",
+      "sql"
+    ]
+  },
+  {
+    "bug_id": "BUG-003",
+    "title": "File Upload Size Exceeded",
+    "description": "Uploading files larger than 10 MB fails.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "File Upload",
+    "exception": "MaxUploadSizeExceededException",
+    "stack_trace": "MaxUploadSizeExceededException at UploadController.java:67",
+    "root_cause": "Upload size limit configured to 10 MB.",
+    "resolution": "Increased the upload size limit to 50 MB.",
+    "tags": [
+      "upload",
+      "file",
+      "size limit"
+    ]
+  },
+  {
+    "bug_id": "BUG-004",
+    "title": "Invalid Password Causes Authentication Failure",
+    "description": "Users receive an incorrect authentication error even with valid credentials.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Authentication",
+    "exception": "AuthenticationException",
+    "stack_trace": "AuthenticationException at AuthService.java:72",
+    "root_cause": "Password comparison was performed without applying the configured hashing algorithm.",
+    "resolution": "Updated password verification to use the configured password encoder.",
+    "tags": [
+      "authentication",
+      "password",
+      "login"
+    ]
+  },
+  {
+    "bug_id": "BUG-005",
+    "title": "Expired Session Causes Unauthorized Request",
+    "description": "Users are unexpectedly logged out while accessing protected pages.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "Session Management",
+    "exception": "SessionExpiredException",
+    "stack_trace": "SessionExpiredException at SessionManager.java:91",
+    "root_cause": "Session timeout was configured too aggressively.",
+    "resolution": "Increased session timeout and added session refresh handling.",
+    "tags": [
+      "session",
+      "authentication",
+      "timeout"
+    ]
+  },
+  {
+    "bug_id": "BUG-006",
+    "title": "JWT Token Expiration Error",
+    "description": "API requests fail after the access token expires.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Authorization",
+    "exception": "ExpiredJwtException",
+    "stack_trace": "ExpiredJwtException at JwtFilter.java:54",
+    "root_cause": "Expired tokens were not handled by the refresh-token flow.",
+    "resolution": "Implemented automatic access-token refresh using refresh tokens.",
+    "tags": [
+      "jwt",
+      "token",
+      "authorization"
+    ]
+  },
+  {
+    "bug_id": "BUG-007",
+    "title": "Access Denied for Authorized User",
+    "description": "Users with the correct role cannot access an authorized endpoint.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Authorization",
+    "exception": "AccessDeniedException",
+    "stack_trace": "AccessDeniedException at SecurityFilter.java:103",
+    "root_cause": "Role names in the security configuration did not match database roles.",
+    "resolution": "Normalized role names and updated authorization configuration.",
+    "tags": [
+      "authorization",
+      "roles",
+      "security"
+    ]
+  },
+  {
+    "bug_id": "BUG-008",
+    "title": "User Registration Email Validation Failure",
+    "description": "Valid email addresses are rejected during registration.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "Registration",
+    "exception": "ValidationException",
+    "stack_trace": "ValidationException at RegistrationService.java:38",
+    "root_cause": "The email validation regular expression rejected valid domain formats.",
+    "resolution": "Replaced the overly restrictive email validation pattern.",
+    "tags": [
+      "registration",
+      "email",
+      "validation"
+    ]
+  },
+  {
+    "bug_id": "BUG-009",
+    "title": "Duplicate User Registration",
+    "description": "The system allows multiple accounts with the same email address.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Registration",
+    "exception": "DuplicateKeyException",
+    "stack_trace": "DuplicateKeyException at UserRepository.java:61",
+    "root_cause": "Email uniqueness was not enforced at the database level.",
+    "resolution": "Added a unique database constraint and application-level validation.",
+    "tags": [
+      "registration",
+      "database",
+      "duplicate"
+    ]
+  },
+  {
+    "bug_id": "BUG-010",
+    "title": "SQL Syntax Error in User Query",
+    "description": "Fetching users fails after deployment.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Database",
+    "exception": "SQLSyntaxErrorException",
+    "stack_trace": "SQLSyntaxErrorException at UserRepository.java:112",
+    "root_cause": "A malformed SQL query was introduced during a repository change.",
+    "resolution": "Corrected the SQL syntax and added repository integration tests.",
+    "tags": [
+      "sql",
+      "database",
+      "query"
+    ]
+  },
+  {
+    "bug_id": "BUG-011",
+    "title": "Database Deadlock During Order Processing",
+    "description": "Order processing occasionally freezes under heavy concurrent traffic.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Database",
+    "exception": "DeadlockLoserDataAccessException",
+    "stack_trace": "DeadlockLoserDataAccessException at OrderService.java:156",
+    "root_cause": "Concurrent transactions acquired database locks in different orders.",
+    "resolution": "Standardized lock ordering and reduced transaction scope.",
+    "tags": [
+      "database",
+      "deadlock",
+      "concurrency"
+    ]
+  },
+  {
+    "bug_id": "BUG-012",
+    "title": "Database Connection Pool Exhaustion",
+    "description": "The application stops serving database requests during peak traffic.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Database",
+    "exception": "HikariPool-ConnectionTimeoutException",
+    "stack_trace": "ConnectionTimeoutException at DataSource.java:76",
+    "root_cause": "Connections were not released after database operations.",
+    "resolution": "Fixed connection lifecycle handling and added pool monitoring.",
+    "tags": [
+      "database",
+      "connection pool",
+      "resource leak"
+    ]
+  },
+  {
+    "bug_id": "BUG-013",
+    "title": "Missing Database Table",
+    "description": "Application fails to start after deployment.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Database Migration",
+    "exception": "TableNotFoundException",
+    "stack_trace": "SQLException at MigrationService.java:44",
+    "root_cause": "A database migration was not executed in the production environment.",
+    "resolution": "Added migration validation to the deployment pipeline.",
+    "tags": [
+      "database",
+      "migration",
+      "deployment"
+    ]
+  },
+  {
+    "bug_id": "BUG-014",
+    "title": "REST API Returns 500 Error",
+    "description": "The user profile API returns an internal server error.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "REST API",
+    "exception": "InternalServerError",
+    "stack_trace": "InternalServerError at UserController.java:83",
+    "root_cause": "Unhandled exception occurred while constructing the profile response.",
+    "resolution": "Added exception handling and response validation.",
+    "tags": [
+      "api",
+      "500",
+      "exception"
+    ]
+  },
+  {
+    "bug_id": "BUG-015",
+    "title": "REST API Returns 404 for Existing Resource",
+    "description": "A valid user ID returns a not found response.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "REST API",
+    "exception": "ResourceNotFoundException",
+    "stack_trace": "ResourceNotFoundException at UserController.java:56",
+    "root_cause": "The controller used an incorrect database identifier field.",
+    "resolution": "Corrected the identifier mapping.",
+    "tags": [
+      "api",
+      "404",
+      "user"
+    ]
+  },
+  {
+    "bug_id": "BUG-016",
+    "title": "API Request Timeout",
+    "description": "The product API takes longer than the configured request timeout.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "REST API",
+    "exception": "SocketTimeoutException",
+    "stack_trace": "SocketTimeoutException at ProductService.java:120",
+    "root_cause": "An expensive database query was executed for every request.",
+    "resolution": "Optimized the query and added caching for frequently requested products.",
+    "tags": [
+      "api",
+      "timeout",
+      "performance"
+    ]
+  },
+  {
+    "bug_id": "BUG-017",
+    "title": "Malformed JSON Request",
+    "description": "The API rejects requests containing optional fields.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "REST API",
+    "exception": "JsonParseException",
+    "stack_trace": "JsonParseException at RequestParser.java:34",
+    "root_cause": "The request parser expected a different JSON field structure.",
+    "resolution": "Updated request DTO mapping and validation.",
+    "tags": [
+      "api",
+      "json",
+      "validation"
+    ]
+  },
+  {
+    "bug_id": "BUG-018",
+    "title": "Payment Processing Failure",
+    "description": "Customers cannot complete card payments.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Payments",
+    "exception": "PaymentGatewayException",
+    "stack_trace": "PaymentGatewayException at PaymentService.java:144",
+    "root_cause": "The payment gateway credentials were incorrectly configured.",
+    "resolution": "Updated gateway credentials and added configuration validation.",
+    "tags": [
+      "payment",
+      "gateway",
+      "configuration"
+    ]
+  },
+  {
+    "bug_id": "BUG-019",
+    "title": "Duplicate Payment Transaction",
+    "description": "A customer is charged twice for the same order.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Payments",
+    "exception": "DuplicateTransactionException",
+    "stack_trace": "DuplicateTransactionException at PaymentService.java:189",
+    "root_cause": "Payment requests were not idempotent during client retries.",
+    "resolution": "Added idempotency keys to payment requests.",
+    "tags": [
+      "payment",
+      "duplicate",
+      "idempotency"
+    ]
+  },
+  {
+    "bug_id": "BUG-020",
+    "title": "Payment Webhook Not Processed",
+    "description": "Successful payments remain marked as pending.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Payments",
+    "exception": "WebhookProcessingException",
+    "stack_trace": "WebhookProcessingException at PaymentWebhook.java:78",
+    "root_cause": "Webhook signature validation rejected legitimate events.",
+    "resolution": "Corrected webhook signature verification.",
+    "tags": [
+      "payment",
+      "webhook",
+      "signature"
+    ]
+  },
+  {
+    "bug_id": "BUG-021",
+    "title": "File Upload Permission Denied",
+    "description": "Users cannot upload files to the configured storage directory.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "File Upload",
+    "exception": "AccessDeniedException",
+    "stack_trace": "AccessDeniedException at FileStorageService.java:71",
+    "root_cause": "The application process lacked write permissions for the storage directory.",
+    "resolution": "Corrected directory permissions and deployment configuration.",
+    "tags": [
+      "file",
+      "upload",
+      "permissions"
+    ]
+  },
+  {
+    "bug_id": "BUG-022",
+    "title": "Corrupted File Download",
+    "description": "Downloaded files cannot be opened by users.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "File Download",
+    "exception": "IOException",
+    "stack_trace": "IOException at FileDownloadService.java:93",
+    "root_cause": "The response stream was closed before the complete file was transmitted.",
+    "resolution": "Fixed stream lifecycle handling.",
+    "tags": [
+      "file",
+      "download",
+      "io"
+    ]
+  },
+  {
+    "bug_id": "BUG-023",
+    "title": "Unsupported File Type",
+    "description": "Users can upload executable files despite file type restrictions.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "File Upload",
+    "exception": "InvalidFileTypeException",
+    "stack_trace": "InvalidFileTypeException at UploadValidator.java:42",
+    "root_cause": "Validation checked the file extension but not the MIME type.",
+    "resolution": "Added MIME type validation and server-side file inspection.",
+    "tags": [
+      "file",
+      "security",
+      "upload"
+    ]
+  },
+  {
+    "bug_id": "BUG-024",
+    "title": "Memory Leak During Large File Processing",
+    "description": "Memory usage continuously increases while processing large files.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "File Processing",
+    "exception": "OutOfMemoryError",
+    "stack_trace": "java.lang.OutOfMemoryError at FileProcessor.java:134",
+    "root_cause": "Entire files were loaded into memory instead of being processed as streams.",
+    "resolution": "Changed file processing to streaming operations.",
+    "tags": [
+      "memory",
+      "file",
+      "performance"
+    ]
+  },
+  {
+    "bug_id": "BUG-025",
+    "title": "External Service Connection Failure",
+    "description": "The application cannot communicate with an external service.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Integration",
+    "exception": "ConnectException",
+    "stack_trace": "ConnectException at ExternalClient.java:61",
+    "root_cause": "The configured external service hostname was incorrect.",
+    "resolution": "Corrected the service endpoint configuration.",
+    "tags": [
+      "network",
+      "integration",
+      "connection"
+    ]
+  },
+  {
+    "bug_id": "BUG-026",
+    "title": "DNS Resolution Failure",
+    "description": "External API calls fail because the hostname cannot be resolved.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Networking",
+    "exception": "UnknownHostException",
+    "stack_trace": "UnknownHostException at ApiClient.java:48",
+    "root_cause": "The configured hostname contained a typo.",
+    "resolution": "Corrected the hostname and added configuration validation.",
+    "tags": [
+      "network",
+      "dns",
+      "api"
+    ]
+  },
+  {
+    "bug_id": "BUG-027",
+    "title": "HTTP Connection Reset",
+    "description": "Requests to the external service randomly fail during high traffic.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Networking",
+    "exception": "SocketException",
+    "stack_trace": "SocketException at HttpClient.java:109",
+    "root_cause": "Persistent connections were reused after the remote server closed them.",
+    "resolution": "Updated HTTP connection pooling and retry handling.",
+    "tags": [
+      "network",
+      "http",
+      "retry"
+    ]
+  },
+  {
+    "bug_id": "BUG-028",
+    "title": "Cache Returns Stale User Data",
+    "description": "Updated user information is not immediately visible.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "Caching",
+    "exception": "StaleDataException",
+    "stack_trace": "StaleDataException at UserCacheService.java:82",
+    "root_cause": "Cache entries were not invalidated after user updates.",
+    "resolution": "Added cache invalidation to update operations.",
+    "tags": [
+      "cache",
+      "user",
+      "stale data"
+    ]
+  },
+  {
+    "bug_id": "BUG-029",
+    "title": "Redis Connection Failure",
+    "description": "The application cannot retrieve cached values.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Caching",
+    "exception": "RedisConnectionException",
+    "stack_trace": "RedisConnectionException at CacheService.java:44",
+    "root_cause": "Redis connection settings were incorrect.",
+    "resolution": "Corrected Redis configuration and added connection health checks.",
+    "tags": [
+      "redis",
+      "cache",
+      "connection"
+    ]
+  },
+  {
+    "bug_id": "BUG-030",
+    "title": "Concurrent Modification Exception",
+    "description": "The application crashes when multiple threads update a collection.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Concurrency",
+    "exception": "ConcurrentModificationException",
+    "stack_trace": "ConcurrentModificationException at TaskManager.java:97",
+    "root_cause": "A collection was modified while another thread was iterating over it.",
+    "resolution": "Replaced the collection with a thread-safe implementation.",
+    "tags": [
+      "concurrency",
+      "thread",
+      "collection"
+    ]
+  },
+  {
+    "bug_id": "BUG-031",
+    "title": "Race Condition in Order Creation",
+    "description": "Two simultaneous requests can create duplicate orders.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Orders",
+    "exception": "DuplicateOrderException",
+    "stack_trace": "DuplicateOrderException at OrderService.java:118",
+    "root_cause": "Order creation was not protected against concurrent requests.",
+    "resolution": "Added transaction locking and idempotency validation.",
+    "tags": [
+      "orders",
+      "race condition",
+      "concurrency"
+    ]
+  },
+  {
+    "bug_id": "BUG-032",
+    "title": "Incorrect Date Format",
+    "description": "API requests fail when clients send dates in a different supported format.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "Validation",
+    "exception": "DateTimeParseException",
+    "stack_trace": "DateTimeParseException at DateParser.java:31",
+    "root_cause": "The API accepted only one date format without documenting or validating it properly.",
+    "resolution": "Added explicit date format validation and conversion.",
+    "tags": [
+      "date",
+      "validation",
+      "api"
+    ]
+  },
+  {
+    "bug_id": "BUG-033",
+    "title": "Missing Required Request Field",
+    "description": "Requests without a required customer ID cause an internal server error.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "Validation",
+    "exception": "ValidationException",
+    "stack_trace": "ValidationException at RequestValidator.java:55",
+    "root_cause": "Missing fields were not validated before service processing.",
+    "resolution": "Added request DTO validation for required fields.",
+    "tags": [
+      "validation",
+      "request",
+      "api"
+    ]
+  },
+  {
+    "bug_id": "BUG-034",
+    "title": "Configuration Property Missing",
+    "description": "Application startup fails in a new environment.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Configuration",
+    "exception": "ConfigurationException",
+    "stack_trace": "ConfigurationException at ApplicationConfig.java:29",
+    "root_cause": "A required environment variable was missing.",
+    "resolution": "Added startup configuration validation and documented required variables.",
+    "tags": [
+      "configuration",
+      "environment",
+      "startup"
+    ]
+  },
+  {
+    "bug_id": "BUG-035",
+    "title": "Incorrect Environment Configuration",
+    "description": "The application connects to the wrong database after deployment.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Configuration",
+    "exception": "DatabaseConfigurationException",
+    "stack_trace": "DatabaseConfigurationException at DataSourceConfig.java:39",
+    "root_cause": "Production environment variables contained development database settings.",
+    "resolution": "Separated environment-specific configuration and added deployment checks.",
+    "tags": [
+      "configuration",
+      "database",
+      "deployment"
+    ]
+  },
+  {
+    "bug_id": "BUG-036",
+    "title": "Application Startup Failure",
+    "description": "The service fails during startup after a dependency update.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Application Startup",
+    "exception": "BeanCreationException",
+    "stack_trace": "BeanCreationException at ApplicationContext.java:115",
+    "root_cause": "A dependency configuration became incompatible with the updated framework version.",
+    "resolution": "Updated configuration and aligned compatible dependency versions.",
+    "tags": [
+      "startup",
+      "dependency",
+      "configuration"
+    ]
+  },
+  {
+    "bug_id": "BUG-037",
+    "title": "Dependency Version Conflict",
+    "description": "Application compilation fails after adding a new library.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Build System",
+    "exception": "NoSuchMethodError",
+    "stack_trace": "NoSuchMethodError at ApplicationService.java:24",
+    "root_cause": "Two libraries required incompatible versions of the same dependency.",
+    "resolution": "Aligned dependency versions and removed the conflicting transitive dependency.",
+    "tags": [
+      "dependency",
+      "build",
+      "version"
+    ]
+  },
+  {
+    "bug_id": "BUG-038",
+    "title": "Null Configuration Value",
+    "description": "Notification service crashes when sending an email.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Notifications",
+    "exception": "NullPointerException",
+    "stack_trace": "NullPointerException at EmailService.java:63",
+    "root_cause": "SMTP host configuration was null.",
+    "resolution": "Added configuration validation and a meaningful startup error.",
+    "tags": [
+      "email",
+      "configuration",
+      "null pointer"
+    ]
+  },
+  {
+    "bug_id": "BUG-039",
+    "title": "Email Notification Failure",
+    "description": "Password reset emails are not delivered.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Notifications",
+    "exception": "MessagingException",
+    "stack_trace": "MessagingException at EmailService.java:91",
+    "root_cause": "SMTP authentication credentials were invalid.",
+    "resolution": "Updated SMTP credentials and added email service health checks.",
+    "tags": [
+      "email",
+      "smtp",
+      "notification"
+    ]
+  },
+  {
+    "bug_id": "BUG-040",
+    "title": "Password Reset Token Invalid",
+    "description": "Users cannot reset their password using a valid reset link.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Password Reset",
+    "exception": "InvalidTokenException",
+    "stack_trace": "InvalidTokenException at PasswordResetService.java:77",
+    "root_cause": "Reset-token expiration was calculated using different time zones.",
+    "resolution": "Standardized token timestamps to UTC.",
+    "tags": [
+      "password",
+      "reset",
+      "token",
+      "timezone"
+    ]
+  },
+  {
+    "bug_id": "BUG-041",
+    "title": "Incorrect Time Zone in Audit Logs",
+    "description": "Audit timestamps display the wrong local time.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "Audit",
+    "exception": "DateTimeException",
+    "stack_trace": "DateTimeException at AuditService.java:58",
+    "root_cause": "Server-local time was used instead of UTC.",
+    "resolution": "Stored timestamps in UTC and converted them only for display.",
+    "tags": [
+      "audit",
+      "timezone",
+      "datetime"
+    ]
+  },
+  {
+    "bug_id": "BUG-042",
+    "title": "Search Returns Incorrect Results",
+    "description": "Product searches return unrelated products.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "Search",
+    "exception": "SearchQueryException",
+    "stack_trace": "SearchQueryException at SearchService.java:102",
+    "root_cause": "Search terms were tokenized incorrectly before querying the index.",
+    "resolution": "Updated query tokenization and added search relevance tests.",
+    "tags": [
+      "search",
+      "query",
+      "index"
+    ]
+  },
+  {
+    "bug_id": "BUG-043",
+    "title": "Pagination Returns Duplicate Records",
+    "description": "The same records appear on multiple pages.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "REST API",
+    "exception": "PaginationException",
+    "stack_trace": "PaginationException at PageService.java:69",
+    "root_cause": "Pagination queries lacked deterministic sorting.",
+    "resolution": "Added stable ordering to paginated database queries.",
+    "tags": [
+      "pagination",
+      "database",
+      "api"
+    ]
+  },
+  {
+    "bug_id": "BUG-044",
+    "title": "Order Total Calculated Incorrectly",
+    "description": "The final order total does not include the correct discount.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Orders",
+    "exception": "CalculationException",
+    "stack_trace": "CalculationException at OrderCalculator.java:83",
+    "root_cause": "Discount was applied after tax instead of before tax.",
+    "resolution": "Corrected the calculation order and added pricing tests.",
+    "tags": [
+      "orders",
+      "calculation",
+      "discount"
+    ]
+  },
+  {
+    "bug_id": "BUG-045",
+    "title": "Inventory Count Becomes Negative",
+    "description": "Inventory quantity becomes negative after simultaneous purchases.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Inventory",
+    "exception": "InsufficientInventoryException",
+    "stack_trace": "InsufficientInventoryException at InventoryService.java:137",
+    "root_cause": "Inventory updates were not synchronized between concurrent transactions.",
+    "resolution": "Added atomic inventory updates and database-level constraints.",
+    "tags": [
+      "inventory",
+      "concurrency",
+      "orders"
+    ]
+  },
+  {
+    "bug_id": "BUG-046",
+    "title": "Product Not Found During Checkout",
+    "description": "Checkout fails when a product is removed from the catalog.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Checkout",
+    "exception": "ProductNotFoundException",
+    "stack_trace": "ProductNotFoundException at CheckoutService.java:94",
+    "root_cause": "Checkout did not gracefully handle products removed after cart creation.",
+    "resolution": "Added product availability validation during checkout.",
+    "tags": [
+      "checkout",
+      "product",
+      "validation"
+    ]
+  },
+  {
+    "bug_id": "BUG-047",
+    "title": "Null User Object During Authentication",
+    "description": "Authentication crashes when the user lookup returns no record.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Authentication",
+    "exception": "NullPointerException",
+    "stack_trace": "java.lang.NullPointerException at AuthenticationService.java:51",
+    "root_cause": "The authentication service accessed the user object without checking whether the lookup returned null.",
+    "resolution": "Added null handling and returned a controlled authentication failure.",
+    "tags": [
+      "authentication",
+      "login",
+      "null pointer"
+    ]
+  },
+  {
+    "bug_id": "BUG-048",
+    "title": "Login Service User Lookup Failure",
+    "description": "Login fails when a requested username does not exist.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "Authentication",
+    "exception": "UserNotFoundException",
+    "stack_trace": "UserNotFoundException at LoginService.java:58",
+    "root_cause": "Missing user records were not handled before authentication logic executed.",
+    "resolution": "Added explicit user-not-found handling before password verification.",
+    "tags": [
+      "login",
+      "authentication",
+      "user lookup"
+    ]
+  },
+  {
+    "bug_id": "BUG-049",
+    "title": "Null Pointer in User Profile",
+    "description": "Opening a profile crashes when the optional address is missing.",
+    "severity": "High",
+    "priority": "P2",
+    "module": "User Profile",
+    "exception": "NullPointerException",
+    "stack_trace": "java.lang.NullPointerException at ProfileService.java:73",
+    "root_cause": "Profile code accessed an optional address object without checking for null.",
+    "resolution": "Added null-safe handling for optional profile fields.",
+    "tags": [
+      "profile",
+      "null pointer",
+      "user"
+    ]
+  },
+  {
+    "bug_id": "BUG-050",
+    "title": "Authentication Service Crashes on Missing User",
+    "description": "The authentication endpoint crashes when an unknown username is submitted.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Authentication",
+    "exception": "NullPointerException",
+    "stack_trace": "java.lang.NullPointerException at AuthService.java:64",
+    "root_cause": "User lookup returned null and the authentication service accessed user properties without validation.",
+    "resolution": "Added a null check and controlled authentication error handling.",
+    "tags": [
+      "authentication",
+      "login",
+      "null pointer",
+      "user"
+    ]
+  },
+  {
+    "bug_id": "BUG-051",
+    "title": "HealthCheckException in HealthEndpoint.java",
+    "description": "The application container keeps restarting even though the application itself is running correctly.\n\nHealthCheckException at HealthEndpoint.java:41\n\nThe deployment platform reports that the container health check is failing because the configured health endpoint cannot be reached.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "HealthEndpoint",
+    "exception": "HealthCheckException",
+    "stack_trace": "The application container keeps restarting even though the application itself is running correctly.\n\nHealthCheckException at HealthEndpoint.java:41\n\nThe deployment platform reports that the container health check is failing because the configured health endpoint cannot be reached.",
+    "root_cause": "Missing or misconfigured health‑check endpoint configuration (e.g., an environment variable that defines the health‑check URL/port is absent or wrong).",
+    "resolution": "Add a required environment variable (e.g., `HEALTH_CHECK_URL` or `HEALTH_CHECK_PORT`) that points to the application’s health endpoint (such as `http://localhost:8080/actuator/health`) and update the container’s liveness/readiness probe to use this URL. This ensures the platform can reach the endpoint and prevents the container from restarting due to a missing or mis‑configured health check.",
+    "tags": [
+      "HealthCheckException",
+      "HealthEndpoint",
+      "deployment"
+    ]
+  },
+  {
+    "bug_id": "BUG-052",
+    "title": "TimeFormatException in ActivityLogService.java",
+    "description": "The application displays incorrect timestamps for user activity after the latest update.\n\nTimeFormatException at ActivityLogService.java:92\n\nUser activity is being stored correctly, but the dashboard displays timestamps several hours earlier than the actual event time. The issue appears to occur when converting UTC timestamps to the user's local timezone.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "ActivityLogService",
+    "exception": "TimeFormatException",
+    "stack_trace": "The application displays incorrect timestamps for user activity after the latest update.\n\nTimeFormatException at ActivityLogService.java:92\n\nUser activity is being stored correctly, but the dashboard displays timestamps several hours earlier than the actual event time. The issue appears to occur when converting UTC timestamps to the user's local timezone.",
+    "root_cause": "Incorrect date format pattern used when parsing UTC timestamps, causing TimeFormatException and wrong timezone conversion.",
+    "resolution": "Update the UTC parsing logic in `ActivityLogService.java` to use the ISO‑8601 pattern `\"yyyy-MM-dd'T'HH:mm:ss'Z'\"` (or `DateTimeFormatter.ISO_INSTANT`) and explicitly set the parsed `Instant` to UTC. Then convert that `Instant` to the user’s local zone using `ZonedDateTime.ofInstant(instant, userZone)` before formatting for display. This corrects the format mismatch that caused the `TimeFormatException` and ensures accurate timezone conversion.",
+    "tags": [
+      "TimeFormatException",
+      "ActivityLogService"
+    ]
+  },
+  {
+    "bug_id": "BUG-053",
+    "title": "The application shows an incorrect placeholder image when a user profile does not have a profile picture.",
+    "description": "The application shows an incorrect placeholder image when a user profile does not have a profile picture.\n\nImageDisplayException at ProfileComponent.js:74\n\nThe profile page loads successfully, but users without profile pictures see a broken image icon instead of the default placeholder image.",
+    "severity": "Medium",
+    "priority": "P3",
+    "module": "Unknown",
+    "exception": "ImageDisplayException",
+    "stack_trace": "The application shows an incorrect placeholder image when a user profile does not have a profile picture.\n\nImageDisplayException at ProfileComponent.js:74\n\nThe profile page loads successfully, but users without profile pictures see a broken image icon instead of the default placeholder image.",
+    "root_cause": "Missing null/undefined check for the profile picture URL before rendering the image source.",
+    "resolution": "Add a null/undefined check for the profile picture URL in ProfileComponent.js before setting the `src` attribute of the `<img>` tag. If the URL is falsy, set the `src` to a bundled default placeholder image. This ensures the image element always receives a valid source, preventing the broken image icon.",
+    "tags": [
+      "ImageDisplayException"
+    ]
+  },
+  {
+    "bug_id": "BUG-054",
+    "title": "TypeError: unsupported operand type(s) for +: 'int' and 'str'",
+    "description": "TypeError: unsupported operand type(s) for +: 'int' and 'str'\n\nat order_service.py:42\n\nThe order total calculation crashes when a customer applies a discount code. The discount value is received as a string from the API, but the application attempts to add it directly to the numeric order total.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Unknown",
+    "exception": "Unknown",
+    "stack_trace": "TypeError: unsupported operand type(s) for +: 'int' and 'str'\n\nat order_service.py:42\n\nThe order total calculation crashes when a customer applies a discount code. The discount value is received as a string from the API, but the application attempts to add it directly to the numeric order total.",
+    "root_cause": "Discount value is received as a string and is added directly to the numeric order total without type conversion.",
+    "resolution": "Convert the discount value from a string to a numeric type (float or int) before adding it to the order total. This prevents the TypeError and ensures the discount is applied correctly to the numeric total.",
+    "tags": [
+      "new bug"
+    ]
+  },
+  {
+    "bug_id": "BUG-055",
+    "title": "TypeError while calculating order totals",
+    "description": "TypeError while calculating order totals. A numeric subtotal is combined with a string discount returned by the checkout API. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "services/order_service.py",
+    "exception": "TypeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"services/order_service.py\", line 40, in handler\n    process_request(payload)\nTypeError: A numeric subtotal is combined with a string discount returned by the checkout API.",
+    "root_cause": "A numeric subtotal is combined with a string discount returned by the checkout API.",
+    "resolution": "Cast and validate discount values before arithmetic, then add typed numeric fields to the order schema. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "order total",
+      "checkout"
+    ]
+  },
+  {
+    "bug_id": "BUG-056",
+    "title": "ValueError parsing ISO-8601 dates",
+    "description": "ValueError parsing ISO-8601 dates. An empty timestamp is passed to datetime.fromisoformat during import. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "utils/date_parser.py",
+    "exception": "ValueError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"utils/date_parser.py\", line 47, in handler\n    process_request(payload)\nValueError: An empty timestamp is passed to datetime.fromisoformat during import.",
+    "root_cause": "An empty timestamp is passed to datetime.fromisoformat during import.",
+    "resolution": "Reject blank timestamps and normalize trailing Z values before calling fromisoformat. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "date parsing",
+      "imports"
+    ]
+  },
+  {
+    "bug_id": "BUG-057",
+    "title": "KeyError for missing locale in request payload",
+    "description": "KeyError for missing locale in request payload. The preferences endpoint indexes payload['locale'] even when older clients omit that field. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "api/preferences.py",
+    "exception": "KeyError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"api/preferences.py\", line 54, in handler\n    process_request(payload)\nKeyError: The preferences endpoint indexes payload['locale'] even when older clients omit that field.",
+    "root_cause": "The preferences endpoint indexes payload['locale'] even when older clients omit that field.",
+    "resolution": "Use a default locale with payload.get and validate it against supported locales. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "locale",
+      "preferences"
+    ]
+  },
+  {
+    "bug_id": "BUG-058",
+    "title": "IndexError when search returns no rows",
+    "description": "IndexError when search returns no rows. The service reads results[0] after a valid search with no matching records. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "services/search_service.py",
+    "exception": "IndexError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"services/search_service.py\", line 61, in handler\n    process_request(payload)\nIndexError: The service reads results[0] after a valid search with no matching records.",
+    "root_cause": "The service reads results[0] after a valid search with no matching records.",
+    "resolution": "Handle the empty result list and return a not-found response before indexing it. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "empty search",
+      "search"
+    ]
+  },
+  {
+    "bug_id": "BUG-059",
+    "title": "AttributeError for optional profile settings",
+    "description": "AttributeError for optional profile settings. Code dereferences profile.settings.theme for accounts created before settings were introduced. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "api/profile.py",
+    "exception": "AttributeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"api/profile.py\", line 68, in handler\n    process_request(payload)\nAttributeError: Code dereferences profile.settings.theme for accounts created before settings were introduced.",
+    "root_cause": "Code dereferences profile.settings.theme for accounts created before settings were introduced.",
+    "resolution": "Initialize missing settings with defaults and guard optional nested objects. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "profile settings",
+      "accounts"
+    ]
+  },
+  {
+    "bug_id": "BUG-060",
+    "title": "Circular import in report package",
+    "description": "Circular import in report package. The exporter imports a helper from the package initializer while the initializer imports the exporter. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "reports/exporter.py",
+    "exception": "ImportError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"reports/exporter.py\", line 75, in handler\n    process_request(payload)\nImportError: The exporter imports a helper from the package initializer while the initializer imports the exporter.",
+    "root_cause": "The exporter imports a helper from the package initializer while the initializer imports the exporter.",
+    "resolution": "Move shared helpers into a dependency-free module and import them directly. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "circular import",
+      "packaging"
+    ]
+  },
+  {
+    "bug_id": "BUG-061",
+    "title": "Missing cryptography dependency in worker",
+    "description": "Missing cryptography dependency in worker. The background worker imports cryptography although the production requirements file does not install it. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "workers/token_worker.py",
+    "exception": "ModuleNotFoundError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"workers/token_worker.py\", line 82, in handler\n    process_request(payload)\nModuleNotFoundError: The background worker imports cryptography although the production requirements file does not install it.",
+    "root_cause": "The background worker imports cryptography although the production requirements file does not install it.",
+    "resolution": "Pin cryptography in the worker requirements and rebuild the deployment image. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "dependency",
+      "worker"
+    ]
+  },
+  {
+    "bug_id": "BUG-062",
+    "title": "Settings file missing in production",
+    "description": "Settings file missing in production. Startup assumes settings.yaml exists in the current directory instead of using the configured path. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "config/loader.py",
+    "exception": "FileNotFoundError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"config/loader.py\", line 89, in handler\n    process_request(payload)\nFileNotFoundError: Startup assumes settings.yaml exists in the current directory instead of using the configured path.",
+    "root_cause": "Startup assumes settings.yaml exists in the current directory instead of using the configured path.",
+    "resolution": "Resolve the settings path from an environment variable and fail with a clear startup message. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "configuration",
+      "deployment"
+    ]
+  },
+  {
+    "bug_id": "BUG-063",
+    "title": "Permission denied for upload directory",
+    "description": "Permission denied for upload directory. The API process cannot create temporary upload files under a read-only deployment directory. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "api/uploads.py",
+    "exception": "PermissionError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"api/uploads.py\", line 96, in handler\n    process_request(payload)\nPermissionError: The API process cannot create temporary upload files under a read-only deployment directory.",
+    "root_cause": "The API process cannot create temporary upload files under a read-only deployment directory.",
+    "resolution": "Configure a writable temp directory and create it during startup with the service account. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "permissions",
+      "uploads"
+    ]
+  },
+  {
+    "bug_id": "BUG-064",
+    "title": "Malformed JSON configuration",
+    "description": "Malformed JSON configuration. A hand-edited feature flag file contains a trailing comma and prevents application startup. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "config/feature_flags.py",
+    "exception": "JSONDecodeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"config/feature_flags.py\", line 40, in handler\n    process_request(payload)\nJSONDecodeError: A hand-edited feature flag file contains a trailing comma and prevents application startup.",
+    "root_cause": "A hand-edited feature flag file contains a trailing comma and prevents application startup.",
+    "resolution": "Validate the configuration in CI and catch JSONDecodeError with the file and line number. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "json config",
+      "feature flags"
+    ]
+  },
+  {
+    "bug_id": "BUG-065",
+    "title": "CSV rows have inconsistent columns",
+    "description": "CSV rows have inconsistent columns. The user import fails when a partner CSV contains an extra delimiter in an address field. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "etl/import_users.py",
+    "exception": "csv.Error",
+    "stack_trace": "Traceback (most recent call last):\n  File \"etl/import_users.py\", line 47, in handler\n    process_request(payload)\ncsv.Error: The user import fails when a partner CSV contains an extra delimiter in an address field.",
+    "root_cause": "The user import fails when a partner CSV contains an extra delimiter in an address field.",
+    "resolution": "Use a strict CSV dialect, quote the address field, and report malformed row numbers. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "csv",
+      "etl"
+    ]
+  },
+  {
+    "bug_id": "BUG-066",
+    "title": "EmptyDataError on empty analytics export",
+    "description": "EmptyDataError on empty analytics export. pandas.read_csv receives a zero-byte export on days with no events. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "analytics/load_metrics.py",
+    "exception": "EmptyDataError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"analytics/load_metrics.py\", line 54, in handler\n    process_request(payload)\nEmptyDataError: pandas.read_csv receives a zero-byte export on days with no events.",
+    "root_cause": "pandas.read_csv receives a zero-byte export on days with no events.",
+    "resolution": "Check file size before loading and produce an empty DataFrame with the expected columns. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "pandas",
+      "analytics"
+    ]
+  },
+  {
+    "bug_id": "BUG-067",
+    "title": "ParserError on malformed metrics CSV",
+    "description": "ParserError on malformed metrics CSV. A quoted comma in a partner export is not escaped and pandas cannot tokenize the file. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "analytics/load_metrics.py",
+    "exception": "ParserError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"analytics/load_metrics.py\", line 61, in handler\n    process_request(payload)\nParserError: A quoted comma in a partner export is not escaped and pandas cannot tokenize the file.",
+    "root_cause": "A quoted comma in a partner export is not escaped and pandas cannot tokenize the file.",
+    "resolution": "Use the partner delimiter/quoting configuration and quarantine malformed rows for review. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "pandas csv",
+      "analytics"
+    ]
+  },
+  {
+    "bug_id": "BUG-068",
+    "title": "NumPy broadcast shape mismatch",
+    "description": "NumPy broadcast shape mismatch. Feature vectors with one missing column are combined with a fixed-size NumPy weight array. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "ml/feature_builder.py",
+    "exception": "ValueError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"ml/feature_builder.py\", line 68, in handler\n    process_request(payload)\nValueError: Feature vectors with one missing column are combined with a fixed-size NumPy weight array.",
+    "root_cause": "Feature vectors with one missing column are combined with a fixed-size NumPy weight array.",
+    "resolution": "Validate feature dimensions and align columns before performing vectorized arithmetic. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "numpy",
+      "machine learning"
+    ]
+  },
+  {
+    "bug_id": "BUG-069",
+    "title": "Flask route rejects POST method",
+    "description": "Flask route rejects POST method. The admin export route is registered for GET only while the frontend submits a POST request. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "api/admin_routes.py",
+    "exception": "MethodNotAllowed",
+    "stack_trace": "Traceback (most recent call last):\n  File \"api/admin_routes.py\", line 75, in handler\n    process_request(payload)\nMethodNotAllowed: The admin export route is registered for GET only while the frontend submits a POST request.",
+    "root_cause": "The admin export route is registered for GET only while the frontend submits a POST request.",
+    "resolution": "Register the POST method and add a route contract test for the export endpoint. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "flask",
+      "admin"
+    ]
+  },
+  {
+    "bug_id": "BUG-070",
+    "title": "Jinja template not found for email",
+    "description": "Jinja template not found for email. The worker uses a relative template directory that differs from the packaged application path. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "notifications/mailer.py",
+    "exception": "TemplateNotFound",
+    "stack_trace": "Traceback (most recent call last):\n  File \"notifications/mailer.py\", line 82, in handler\n    process_request(payload)\nTemplateNotFound: The worker uses a relative template directory that differs from the packaged application path.",
+    "root_cause": "The worker uses a relative template directory that differs from the packaged application path.",
+    "resolution": "Configure an absolute template loader path and include templates in the build artifact. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "flask",
+      "notifications"
+    ]
+  },
+  {
+    "bug_id": "BUG-071",
+    "title": "FastAPI request validation failure",
+    "description": "FastAPI request validation failure. Webhook payloads with a numeric external_id are rejected because the model requires a string. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "api/webhooks.py",
+    "exception": "RequestValidationError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"api/webhooks.py\", line 89, in handler\n    process_request(payload)\nRequestValidationError: Webhook payloads with a numeric external_id are rejected because the model requires a string.",
+    "root_cause": "Webhook payloads with a numeric external_id are rejected because the model requires a string.",
+    "resolution": "Normalize external_id to a string and return field-level validation details to callers. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "fastapi",
+      "webhooks"
+    ]
+  },
+  {
+    "bug_id": "BUG-072",
+    "title": "FastAPI response validation failure",
+    "description": "FastAPI response validation failure. An optional shipping address is omitted from an order response model that incorrectly marks it required. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "api/orders.py",
+    "exception": "ResponseValidationError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"api/orders.py\", line 96, in handler\n    process_request(payload)\nResponseValidationError: An optional shipping address is omitted from an order response model that incorrectly marks it required.",
+    "root_cause": "An optional shipping address is omitted from an order response model that incorrectly marks it required.",
+    "resolution": "Mark the field optional or always serialize the default address object before returning. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "fastapi",
+      "orders"
+    ]
+  },
+  {
+    "bug_id": "BUG-073",
+    "title": "Django settings improperly configured",
+    "description": "Django settings improperly configured. The staging process imports Django settings before DJANGO_SETTINGS_MODULE is defined. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "django_app/settings.py",
+    "exception": "ImproperlyConfigured",
+    "stack_trace": "Traceback (most recent call last):\n  File \"django_app/settings.py\", line 40, in handler\n    process_request(payload)\nImproperlyConfigured: The staging process imports Django settings before DJANGO_SETTINGS_MODULE is defined.",
+    "root_cause": "The staging process imports Django settings before DJANGO_SETTINGS_MODULE is defined.",
+    "resolution": "Set the module during process startup and document it in the deployment command. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "django",
+      "configuration"
+    ]
+  },
+  {
+    "bug_id": "BUG-074",
+    "title": "SQLAlchemy integrity error on duplicate email",
+    "description": "SQLAlchemy integrity error on duplicate email. Two concurrent signup requests insert the same unique email and the exception is returned as a 500. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "repositories/users.py",
+    "exception": "IntegrityError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"repositories/users.py\", line 47, in handler\n    process_request(payload)\nIntegrityError: Two concurrent signup requests insert the same unique email and the exception is returned as a 500.",
+    "root_cause": "Two concurrent signup requests insert the same unique email and the exception is returned as a 500.",
+    "resolution": "Catch IntegrityError, roll back the session, and return a conflict response for duplicate emails. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "sqlalchemy",
+      "users"
+    ]
+  },
+  {
+    "bug_id": "BUG-075",
+    "title": "SQLAlchemy connection pool timeout",
+    "description": "SQLAlchemy connection pool timeout. Long-running reports hold all SQLAlchemy pool connections until the pool timeout is reached. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "repositories/reporting.py",
+    "exception": "TimeoutError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"repositories/reporting.py\", line 54, in handler\n    process_request(payload)\nTimeoutError: Long-running reports hold all SQLAlchemy pool connections until the pool timeout is reached.",
+    "root_cause": "Long-running reports hold all SQLAlchemy pool connections until the pool timeout is reached.",
+    "resolution": "Close sessions in a finally block, stream large reports, and tune pool sizing for the workload. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "sqlalchemy",
+      "database"
+    ]
+  },
+  {
+    "bug_id": "BUG-076",
+    "title": "requests HTTPError from unavailable billing API",
+    "description": "requests HTTPError from unavailable billing API. The billing client calls raise_for_status when the upstream service returns HTTP 503. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "integrations/billing.py",
+    "exception": "HTTPError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"integrations/billing.py\", line 61, in handler\n    process_request(payload)\nHTTPError: The billing client calls raise_for_status when the upstream service returns HTTP 503.",
+    "root_cause": "The billing client calls raise_for_status when the upstream service returns HTTP 503.",
+    "resolution": "Add bounded retries with backoff, map 503 to a temporary dependency error, and preserve the request id. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "requests",
+      "billing"
+    ]
+  },
+  {
+    "bug_id": "BUG-077",
+    "title": "aiohttp connector error during webhook delivery",
+    "description": "aiohttp connector error during webhook delivery. An aiohttp client cannot resolve the webhook host from the worker network. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "integrations/webhooks.py",
+    "exception": "ClientConnectorError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"integrations/webhooks.py\", line 68, in handler\n    process_request(payload)\nClientConnectorError: An aiohttp client cannot resolve the webhook host from the worker network.",
+    "root_cause": "An aiohttp client cannot resolve the webhook host from the worker network.",
+    "resolution": "Configure DNS/network access, set a connection timeout, and retry transient connector failures. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "aiohttp",
+      "webhooks"
+    ]
+  },
+  {
+    "bug_id": "BUG-078",
+    "title": "Asyncio event loop already running",
+    "description": "Asyncio event loop already running. A notebook invokes asyncio.run while an event loop is already active. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "scripts/reindex.py",
+    "exception": "RuntimeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"scripts/reindex.py\", line 75, in handler\n    process_request(payload)\nRuntimeError: A notebook invokes asyncio.run while an event loop is already active.",
+    "root_cause": "A notebook invokes asyncio.run while an event loop is already active.",
+    "resolution": "Await the coroutine in async callers and provide a synchronous wrapper only for non-async entry points. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "asyncio",
+      "reindex"
+    ]
+  },
+  {
+    "bug_id": "BUG-079",
+    "title": "Asyncio timeout waiting for upstream",
+    "description": "Asyncio timeout waiting for upstream. The recommendation coroutine waits indefinitely when the model service stalls. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "services/recommendations.py",
+    "exception": "TimeoutError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"services/recommendations.py\", line 82, in handler\n    process_request(payload)\nTimeoutError: The recommendation coroutine waits indefinitely when the model service stalls.",
+    "root_cause": "The recommendation coroutine waits indefinitely when the model service stalls.",
+    "resolution": "Wrap the call with asyncio.wait_for, cancel the task on timeout, and return cached recommendations. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "asyncio",
+      "recommendations"
+    ]
+  },
+  {
+    "bug_id": "BUG-080",
+    "title": "Deadlock in threaded cache refresh",
+    "description": "Deadlock in threaded cache refresh. Two worker threads acquire the cache and database locks in opposite order. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "services/cache_refresh.py",
+    "exception": "DeadlockError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"services/cache_refresh.py\", line 89, in handler\n    process_request(payload)\nDeadlockError: Two worker threads acquire the cache and database locks in opposite order.",
+    "root_cause": "Two worker threads acquire the cache and database locks in opposite order.",
+    "resolution": "Use a consistent lock ordering and keep database calls outside the cache critical section. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "threading",
+      "cache"
+    ]
+  },
+  {
+    "bug_id": "BUG-081",
+    "title": "Thread pool shuts down before callbacks finish",
+    "description": "Thread pool shuts down before callbacks finish. The executor is closed while queued notification callbacks still reference it. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "workers/notifications.py",
+    "exception": "RuntimeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"workers/notifications.py\", line 96, in handler\n    process_request(payload)\nRuntimeError: The executor is closed while queued notification callbacks still reference it.",
+    "root_cause": "The executor is closed while queued notification callbacks still reference it.",
+    "resolution": "Join pending futures before shutdown and move executor lifecycle ownership to the worker process. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "concurrency",
+      "notifications"
+    ]
+  },
+  {
+    "bug_id": "BUG-082",
+    "title": "Multiprocessing cannot pickle local callback",
+    "description": "Multiprocessing cannot pickle local callback. A nested function is passed to multiprocessing.Pool and cannot be serialized under spawn. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "etl/parallel.py",
+    "exception": "PicklingError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"etl/parallel.py\", line 40, in handler\n    process_request(payload)\nPicklingError: A nested function is passed to multiprocessing.Pool and cannot be serialized under spawn.",
+    "root_cause": "A nested function is passed to multiprocessing.Pool and cannot be serialized under spawn.",
+    "resolution": "Define the worker function at module scope and pass serializable arguments only. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "multiprocessing",
+      "etl"
+    ]
+  },
+  {
+    "bug_id": "BUG-083",
+    "title": "MemoryError joining large DataFrames",
+    "description": "MemoryError joining large DataFrames. A full pandas join duplicates several million event rows in memory. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "analytics/merge_events.py",
+    "exception": "MemoryError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"analytics/merge_events.py\", line 47, in handler\n    process_request(payload)\nMemoryError: A full pandas join duplicates several million event rows in memory.",
+    "root_cause": "A full pandas join duplicates several million event rows in memory.",
+    "resolution": "Select only required columns, process partitions incrementally, and release intermediate frames. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "pandas",
+      "analytics"
+    ]
+  },
+  {
+    "bug_id": "BUG-084",
+    "title": "RecursionError serializing nested response",
+    "description": "RecursionError serializing nested response. A parent-child object graph contains a back-reference and the JSON serializer traverses it forever. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "api/serialize.py",
+    "exception": "RecursionError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"api/serialize.py\", line 54, in handler\n    process_request(payload)\nRecursionError: A parent-child object graph contains a back-reference and the JSON serializer traverses it forever.",
+    "root_cause": "A parent-child object graph contains a back-reference and the JSON serializer traverses it forever.",
+    "resolution": "Use explicit response schemas and omit back-reference fields during serialization. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "serialization",
+      "api"
+    ]
+  },
+  {
+    "bug_id": "BUG-085",
+    "title": "Retry loop exceeds operation timeout",
+    "description": "Retry loop exceeds operation timeout. The retry loop sleeps after every failed attempt without accounting for the overall request deadline. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "clients/retry_client.py",
+    "exception": "LoopTimeoutError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"clients/retry_client.py\", line 61, in handler\n    process_request(payload)\nLoopTimeoutError: The retry loop sleeps after every failed attempt without accounting for the overall request deadline.",
+    "root_cause": "The retry loop sleeps after every failed attempt without accounting for the overall request deadline.",
+    "resolution": "Track a monotonic deadline and stop retries when the remaining budget is exhausted. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "retry",
+      "clients"
+    ]
+  },
+  {
+    "bug_id": "BUG-086",
+    "title": "Worker uses wrong Python interpreter",
+    "description": "Worker uses wrong Python interpreter. Cron launches the system Python, which cannot import packages installed in the project virtualenv. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "scripts/worker.py",
+    "exception": "ModuleNotFoundError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"scripts/worker.py\", line 68, in handler\n    process_request(payload)\nModuleNotFoundError: Cron launches the system Python, which cannot import packages installed in the project virtualenv.",
+    "root_cause": "Cron launches the system Python, which cannot import packages installed in the project virtualenv.",
+    "resolution": "Use the virtualenv interpreter in the service definition and log sys.executable at startup. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "python environment",
+      "deployment"
+    ]
+  },
+  {
+    "bug_id": "BUG-087",
+    "title": "Dependency API removed after upgrade",
+    "description": "Dependency API removed after upgrade. The storage adapter imports a symbol removed by a major boto-compatible client upgrade. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "integrations/storage.py",
+    "exception": "ImportError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"integrations/storage.py\", line 75, in handler\n    process_request(payload)\nImportError: The storage adapter imports a symbol removed by a major boto-compatible client upgrade.",
+    "root_cause": "The storage adapter imports a symbol removed by a major boto-compatible client upgrade.",
+    "resolution": "Pin the compatible client version and migrate the adapter to the supported import path. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "dependency",
+      "storage"
+    ]
+  },
+  {
+    "bug_id": "BUG-088",
+    "title": "JWT signature rejected after key rotation",
+    "description": "JWT signature rejected after key rotation. Tokens signed with the newly rotated key are checked only against the old cached public key. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "auth/jwt_validator.py",
+    "exception": "InvalidSignatureError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"auth/jwt_validator.py\", line 82, in handler\n    process_request(payload)\nInvalidSignatureError: Tokens signed with the newly rotated key are checked only against the old cached public key.",
+    "root_cause": "Tokens signed with the newly rotated key are checked only against the old cached public key.",
+    "resolution": "Refresh the key set on rotation and retain both keys during the configured overlap window. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "jwt",
+      "authentication"
+    ]
+  },
+  {
+    "bug_id": "BUG-089",
+    "title": "Upload exceeds request size limit",
+    "description": "Upload exceeds request size limit. A legitimate diagnostic archive exceeds the reverse proxy request limit and is rejected before parsing. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "api/upload.py",
+    "exception": "RequestEntityTooLarge",
+    "stack_trace": "Traceback (most recent call last):\n  File \"api/upload.py\", line 89, in handler\n    process_request(payload)\nRequestEntityTooLarge: A legitimate diagnostic archive exceeds the reverse proxy request limit and is rejected before parsing.",
+    "root_cause": "A legitimate diagnostic archive exceeds the reverse proxy request limit and is rejected before parsing.",
+    "resolution": "Raise the coordinated proxy/API limit and provide a clear max-size validation message. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "uploads",
+      "http"
+    ]
+  },
+  {
+    "bug_id": "BUG-090",
+    "title": "Decimal cannot be JSON encoded",
+    "description": "Decimal cannot be JSON encoded. Invoice responses contain Decimal values that the default JSON encoder cannot serialize. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "api/invoices.py",
+    "exception": "TypeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"api/invoices.py\", line 96, in handler\n    process_request(payload)\nTypeError: Invoice responses contain Decimal values that the default JSON encoder cannot serialize.",
+    "root_cause": "Invoice responses contain Decimal values that the default JSON encoder cannot serialize.",
+    "resolution": "Convert Decimal values to strings or use a Decimal-aware response encoder. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "json",
+      "billing"
+    ]
+  },
+  {
+    "bug_id": "BUG-091",
+    "title": "Model checkpoint cannot be opened",
+    "description": "Model checkpoint cannot be opened. The inference process references a checkpoint path that is missing from the container image. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "ml/model_loader.py",
+    "exception": "OSError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"ml/model_loader.py\", line 40, in handler\n    process_request(payload)\nOSError: The inference process references a checkpoint path that is missing from the container image.",
+    "root_cause": "The inference process references a checkpoint path that is missing from the container image.",
+    "resolution": "Package the checkpoint as an artifact, validate its path at startup, and expose a health-check failure. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "pytorch",
+      "machine learning"
+    ]
+  },
+  {
+    "bug_id": "BUG-092",
+    "title": "Tensor device mismatch during inference",
+    "description": "Tensor device mismatch during inference. Input tensors remain on CPU while the loaded PyTorch model is on CUDA. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "ml/predict.py",
+    "exception": "RuntimeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"ml/predict.py\", line 47, in handler\n    process_request(payload)\nRuntimeError: Input tensors remain on CPU while the loaded PyTorch model is on CUDA.",
+    "root_cause": "Input tensors remain on CPU while the loaded PyTorch model is on CUDA.",
+    "resolution": "Move inputs to model.device and keep preprocessing/device selection in one inference helper. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "pytorch",
+      "machine learning"
+    ]
+  },
+  {
+    "bug_id": "BUG-093",
+    "title": "UnicodeDecodeError reading legacy log",
+    "description": "UnicodeDecodeError reading legacy log. A legacy Windows-1252 log is opened as UTF-8 and ingestion stops at a smart quote. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "ingest/log_reader.py",
+    "exception": "UnicodeDecodeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"ingest/log_reader.py\", line 54, in handler\n    process_request(payload)\nUnicodeDecodeError: A legacy Windows-1252 log is opened as UTF-8 and ingestion stops at a smart quote.",
+    "root_cause": "A legacy Windows-1252 log is opened as UTF-8 and ingestion stops at a smart quote.",
+    "resolution": "Detect or configure the source encoding and decode with an explicit replacement policy. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "encoding",
+      "ingestion"
+    ]
+  },
+  {
+    "bug_id": "BUG-094",
+    "title": "Socket timeout in health probe",
+    "description": "Socket timeout in health probe. The TCP health probe uses the default blocking socket timeout against a slow dependency. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "monitoring/probe.py",
+    "exception": "TimeoutError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"monitoring/probe.py\", line 61, in handler\n    process_request(payload)\nTimeoutError: The TCP health probe uses the default blocking socket timeout against a slow dependency.",
+    "root_cause": "The TCP health probe uses the default blocking socket timeout against a slow dependency.",
+    "resolution": "Set a short socket timeout, close the socket in finally, and distinguish timeout from refusal. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "socket",
+      "monitoring"
+    ]
+  },
+  {
+    "bug_id": "BUG-095",
+    "title": "Redis connection unavailable during rate limiting",
+    "description": "Redis connection unavailable during rate limiting. Requests fail when the Redis service restarts because the limiter does not reconnect. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "middleware/rate_limit.py",
+    "exception": "ConnectionError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"middleware/rate_limit.py\", line 68, in handler\n    process_request(payload)\nConnectionError: Requests fail when the Redis service restarts because the limiter does not reconnect.",
+    "root_cause": "Requests fail when the Redis service restarts because the limiter does not reconnect.",
+    "resolution": "Use a connection pool with retry/backoff and fail open with a bounded local limit when appropriate. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "redis",
+      "rate limiting"
+    ]
+  },
+  {
+    "bug_id": "BUG-096",
+    "title": "Stale Redis cache returns old permissions",
+    "description": "Stale Redis cache returns old permissions. Permission updates do not invalidate the Redis key, so users retain old access for the TTL. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "services/permissions.py",
+    "exception": "CacheConsistencyError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"services/permissions.py\", line 75, in handler\n    process_request(payload)\nCacheConsistencyError: Permission updates do not invalidate the Redis key, so users retain old access for the TTL.",
+    "root_cause": "Permission updates do not invalidate the Redis key, so users retain old access for the TTL.",
+    "resolution": "Version permission keys and publish invalidation events after each successful update. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "redis",
+      "authorization"
+    ]
+  },
+  {
+    "bug_id": "BUG-097",
+    "title": "Celery task revoked before execution",
+    "description": "Celery task revoked before execution. A long export is revoked during deployment and the result endpoint treats it as an unhandled failure. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "workers/export_tasks.py",
+    "exception": "TaskRevokedError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"workers/export_tasks.py\", line 82, in handler\n    process_request(payload)\nTaskRevokedError: A long export is revoked during deployment and the result endpoint treats it as an unhandled failure.",
+    "root_cause": "A long export is revoked during deployment and the result endpoint treats it as an unhandled failure.",
+    "resolution": "Catch task revocation, persist a cancelled status, and let the UI distinguish cancellation from failure. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "celery",
+      "exports"
+    ]
+  },
+  {
+    "bug_id": "BUG-098",
+    "title": "Celery cannot encode task result",
+    "description": "Celery cannot encode task result. A task returns a custom exception object that the configured result backend cannot serialize. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "workers/report_tasks.py",
+    "exception": "EncodeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"workers/report_tasks.py\", line 89, in handler\n    process_request(payload)\nEncodeError: A task returns a custom exception object that the configured result backend cannot serialize.",
+    "root_cause": "A task returns a custom exception object that the configured result backend cannot serialize.",
+    "resolution": "Return plain JSON-compatible dictionaries and log the original exception separately. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "celery",
+      "reports"
+    ]
+  },
+  {
+    "bug_id": "BUG-099",
+    "title": "UnicodeEncodeError in file logger",
+    "description": "UnicodeEncodeError in file logger. The file handler uses an ASCII locale and crashes while writing a user name containing emoji. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "logging/setup.py",
+    "exception": "UnicodeEncodeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"logging/setup.py\", line 96, in handler\n    process_request(payload)\nUnicodeEncodeError: The file handler uses an ASCII locale and crashes while writing a user name containing emoji.",
+    "root_cause": "The file handler uses an ASCII locale and crashes while writing a user name containing emoji.",
+    "resolution": "Configure UTF-8 encoding on the handler and sanitize only control characters. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "logging",
+      "observability"
+    ]
+  },
+  {
+    "bug_id": "BUG-100",
+    "title": "Missing environment variable for signing key",
+    "description": "Missing environment variable for signing key. Startup indexes os.environ['APP_SIGNING_KEY'] without a deployment-time validation message. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "config/env.py",
+    "exception": "KeyError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"config/env.py\", line 40, in handler\n    process_request(payload)\nKeyError: Startup indexes os.environ['APP_SIGNING_KEY'] without a deployment-time validation message.",
+    "root_cause": "Startup indexes os.environ['APP_SIGNING_KEY'] without a deployment-time validation message.",
+    "resolution": "Validate required environment variables at startup and report the missing variable name clearly. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "environment",
+      "configuration"
+    ]
+  },
+  {
+    "bug_id": "BUG-101",
+    "title": "Coroutine was never awaited",
+    "description": "Coroutine was never awaited. An async audit writer is called like a normal function, so events are silently dropped. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "Medium",
+    "priority": "P2",
+    "module": "services/audit.py",
+    "exception": "RuntimeWarning",
+    "stack_trace": "Traceback (most recent call last):\n  File \"services/audit.py\", line 47, in handler\n    process_request(payload)\nRuntimeWarning: An async audit writer is called like a normal function, so events are silently dropped.",
+    "root_cause": "An async audit writer is called like a normal function, so events are silently dropped.",
+    "resolution": "Await the writer from async code and add a test that asserts the coroutine is scheduled. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "asyncio",
+      "audit"
+    ]
+  },
+  {
+    "bug_id": "BUG-102",
+    "title": "KeyError after pandas merge suffix change",
+    "description": "KeyError after pandas merge suffix change. A merged DataFrame renames duplicate customer_id columns, but downstream code still accesses the old name. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "analytics/normalize.py",
+    "exception": "KeyError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"analytics/normalize.py\", line 54, in handler\n    process_request(payload)\nKeyError: A merged DataFrame renames duplicate customer_id columns, but downstream code still accesses the old name.",
+    "root_cause": "A merged DataFrame renames duplicate customer_id columns, but downstream code still accesses the old name.",
+    "resolution": "Declare merge suffixes explicitly and select the canonical customer_id column before transforms. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "pandas",
+      "analytics"
+    ]
+  },
+  {
+    "bug_id": "BUG-103",
+    "title": "Django CSRF validation blocks trusted webhook",
+    "description": "Django CSRF validation blocks trusted webhook. A server-to-server webhook POST is rejected because it is routed through a browser CSRF-protected view. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "django_app/webhooks.py",
+    "exception": "CsrfViewMiddleware",
+    "stack_trace": "Traceback (most recent call last):\n  File \"django_app/webhooks.py\", line 61, in handler\n    process_request(payload)\nCsrfViewMiddleware: A server-to-server webhook POST is rejected because it is routed through a browser CSRF-protected view.",
+    "root_cause": "A server-to-server webhook POST is rejected because it is routed through a browser CSRF-protected view.",
+    "resolution": "Use a dedicated webhook endpoint with signature verification and exempt only that endpoint from CSRF. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "django",
+      "security"
+    ]
+  },
+  {
+    "bug_id": "BUG-104",
+    "title": "Background task uses closed event loop",
+    "description": "Background task uses closed event loop. A background cleanup callback runs after the application event loop has been closed during shutdown. The failure is reproducible in the Python service when the affected code path receives the triggering input.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "workers/cleanup.py",
+    "exception": "RuntimeError",
+    "stack_trace": "Traceback (most recent call last):\n  File \"workers/cleanup.py\", line 68, in handler\n    process_request(payload)\nRuntimeError: A background cleanup callback runs after the application event loop has been closed during shutdown.",
+    "root_cause": "A background cleanup callback runs after the application event loop has been closed during shutdown.",
+    "resolution": "Cancel and await background tasks before loop shutdown, and guard callbacks against a closed loop. Add regression coverage for the affected Python path and monitor the corresponding error metric after deployment.",
+    "tags": [
+      "Python",
+      "asyncio",
+      "shutdown"
+    ]
+  },
+  {
+    "bug_id": "BUG-105",
+    "title": "FileUploadException in UploadController.java",
+    "description": "FileUploadException\nat UploadController.java:67\n\nUsers are unable to upload files larger than the configured file size limit.",
+    "severity": "High",
+    "priority": "P1",
+    "module": "UploadController",
+    "exception": "FileUploadException",
+    "stack_trace": "FileUploadException\nat UploadController.java:67\n\nUsers are unable to upload files larger than the configured file size limit.",
+    "root_cause": "The upload size limit is incorrectly configured (set too low or not updated).",
+    "resolution": "Increase the multipart max file size in the application configuration to a value that matches the business requirement (e.g., 100 MB) and ensure the controller’s @RequestParam annotation allows larger files. This directly addresses the root cause by raising the limit that was previously set too low.",
+    "tags": [
+      "FileUploadException",
+      "UploadController"
+    ]
+  },
+  {
+    "bug_id": "BUG-106",
+    "title": "java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.",
+    "description": "java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.\n\nat com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)\nat com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:196)\nat com.example.auth.DatabaseService.getConnection(DatabaseService.java:87)\nat com.example.auth.LoginService.authenticate(LoginService.java:142)\nat com.example.controller.LoginController.login(LoginController.java:56)",
+    "severity": "Critical",
+    "priority": "P1",
+    "module": "Unknown",
+    "exception": "java.sql.SQLTransientConnectionException",
+    "stack_trace": "java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.\n\nat com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)\nat com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:196)\nat com.example.auth.DatabaseService.getConnection(DatabaseService.java:87)\nat com.example.auth.LoginService.authenticate(LoginService.java:142)\nat com.example.controller.LoginController.login(LoginController.java:56)",
+    "root_cause": "Connections are not being returned to the Hikari pool after use, leading to pool exhaustion.",
+    "resolution": "Ensure every database operation closes the Connection in a try‑with‑resources block (or a finally clause). Update the LoginService.authenticate method to acquire the Connection via try‑with‑resources so it is automatically returned to HikariCP, preventing pool exhaustion.",
+    "tags": [
+      "java.sql.SQLTransientConnectionException",
+      "database",
+      "timeout"
+    ]
+  },
+  {
+    "bug_id": "BUG-107",
+    "title": "Dashboard severity label uses inconsistent capitalization",
+    "description": "The dashboard displays one non-functional severity label with different capitalization from the other labels. Analysis results and calculations are unaffected.",
+    "severity": "Low",
+    "priority": "P4",
+    "module": "Frontend",
+    "exception": "UIWarning",
+    "stack_trace": "",
+    "root_cause": "The label text is hard-coded with inconsistent capitalization.",
+    "resolution": "Update the label text to use the same capitalization convention as the other dashboard labels.",
+    "tags": [
+      "ui",
+      "dashboard",
+      "copy"
+    ]
+  },
+  {
+    "bug_id": "BUG-108",
+    "title": "Download report button is missing an explanatory tooltip",
+    "description": "The report download button works correctly, but it does not provide a tooltip explaining the action when the pointer hovers over it.",
+    "severity": "Low",
+    "priority": "P4",
+    "module": "Frontend",
+    "exception": "AccessibilityWarning",
+    "stack_trace": "",
+    "root_cause": "The button was implemented without a descriptive tooltip or title attribute.",
+    "resolution": "Add a short tooltip describing that the control downloads the completed PDF report.",
+    "tags": [
+      "accessibility",
+      "tooltip",
+      "reports"
+    ]
+  },
+  {
+    "bug_id": "BUG-109",
+    "title": "Optional debug log omits the analysis request identifier",
+    "description": "A non-critical debug message is written without the request identifier, making local troubleshooting slightly less convenient while the analysis itself completes normally.",
+    "severity": "Low",
+    "priority": "P4",
+    "module": "Backend",
+    "exception": "LoggingWarning",
+    "stack_trace": "",
+    "root_cause": "The logging statement does not include the request identifier in its structured context.",
+    "resolution": "Include the request identifier in the optional debug log fields.",
+    "tags": [
+      "logging",
+      "observability",
+      "debug"
+    ]
+  },
+  {
+    "bug_id": "BUG-110",
+    "title": "Knowledge-base card has a minor spacing mismatch",
+    "description": "One knowledge-base result card has slightly different padding from the surrounding cards. Search, filtering, and similarity results remain correct.",
+    "severity": "Low",
+    "priority": "P4",
+    "module": "Knowledge Base",
+    "exception": "UIWarning",
+    "stack_trace": "",
+    "root_cause": "The card uses a local spacing value instead of the shared component spacing token.",
+    "resolution": "Apply the shared card spacing value to the affected knowledge-base result.",
+    "tags": [
+      "ui",
+      "knowledge-base",
+      "spacing"
+    ]
+  }
+]
