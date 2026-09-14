@@ -345,7 +345,3 @@ npm run build
 - Knowledge-base entries are checked for duplicate IDs and duplicate title-description pairs.
 - LLM error messages do not expose credentials.
 - RAG responses are guidance and should be reviewed by a developer before production changes are made.
-
-## Internship documentation
-
-The `Documentation/` directory contains the Agile template, defect tracker, and unit-test plan for Smart Bug Analyzer. These files are project records and should be committed with the source code when they contain the final reviewed content.
